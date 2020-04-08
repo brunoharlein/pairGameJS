@@ -97,6 +97,24 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+   .card {
+     height: 150px;
+   }
+
+   h1{
+     font-family: 'Gloria Hallelujah', cursive;
+   }
+
+   .lead {
+     font-style: italic;
+     border-top: 1px solid white;
+     padding-top: 1em;
+   }
+
+   .row button {
+     text-align: center;
+     margin: auto;
+   }
 
 /* ==========================================================================
    Helper classes
@@ -262,4 +280,3 @@ textarea {
     page-break-after: avoid;
   }
 }
-
