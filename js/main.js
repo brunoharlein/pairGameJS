@@ -1,29 +1,30 @@
 // global variables
-var userAnswers = [];
-var clickedCards = [];
-var allowClick = true;
-var score = 0;
+let userAnswers = [];
+let clickedCards = [];
+let allowClick = true;
+let score = 0;
 
-var startGameButton = document.getElementById("startGame");
+let startGameButton = document.getElementById("startGame");
 
 
 // Functions
 //Create an array of 12 colors and sorts it randomly
 // Créez un tableau de 12 couleurs et trie au hasard
 function randomizeColors() {
-  var colors = [
-    "red",
-    "red",
-    "green",
-    "green",
-    "blue",
-    "blue",
-    "yellow",
-    "yellow",
-    "purple",
-    "purple",
-    "salmon",
-    "salmon"
+  let colors = [
+    "url('img/chirac.gif')",
+    "url('img/chirac.gif')",
+    "url('img/chirac2.gif')",
+    "url('img/chirac2.gif')",
+    "url('img/chirac3.gif')",
+    "url('img/chirac3.gif')",
+    "url('img/chirac4.gif')",
+    "url('img/chirac4.gif')",
+    "url('img/chirac5.gif')",
+    "url('img/chirac5.gif')",
+    "url('img/chirac6.gif')",
+    "url('img/chirac6.gif')",
+
   ];
   return colors.sort(function(a, b){
     return 0.5 - Math.random()
@@ -33,8 +34,8 @@ function randomizeColors() {
 //Create a card element to be displayed on the screen
 // Créer une carte à afficher à l'écran
 function createCard() {
-  var card = document.createElement('div');
-  card.className = "col-sm-2";
+  let card = document.createElement('div');
+  card.className = "col-sm-3";
   card.innerHTML = "<div class='card my-2' style='background-color: black'></div>";
   return card;
 }
@@ -42,9 +43,9 @@ function createCard() {
 //Create 12 card elements on the screen
 // Créez 12 cartes à l'écran
 function addCards() {
-  var boardGame = document.getElementById("boardGame");
-  for (var i = 0; i < 12; i++) {
-    var card = createCard();
+  let boardGame = document.getElementById("boardGame");
+  for (let i = 0; i < 12; i++) {
+    let card = createCard();
     boardGame.appendChild(card);
   }
 }
@@ -60,8 +61,8 @@ function changeCardColor(card, color) {
 //Function to start the time
 // Fonction pour démarrer le temps
 function timer() {
-  var seconds = 30;
-  var timer = document.getElementById("timer");
+  let seconds = 30;
+  let timer = document.getElementById("timer");
   timer.innerHTML = "<i class='fas fa-hourglass-start ml-2'></i> Temps restant : " + seconds + " s";
   setInterval(function(){
     if(seconds >= 1) {
@@ -119,3 +120,61 @@ function clearAnswers(madePoint = false) {
     allowClick = true;
   }
 }
+
+//Add a point to the user score and restart the game if the user has won
+// Ajouter un point au score de l'utilisateur et redémarrer le jeu si l'utilisateur a gagné
+function addPoint() {
+  score ++;
+  if(score === 6) {
+    restartGame();
+  }
+}
+
+// Handle each user's click by changing the card color, storing the result and comparing them
+// Gérez les clics de chaque utilisateur en changeant la couleur de la carte, en stockant le résultat et en les comparant
+function playMoove(card, answer) {
+  changeCardColor(card, answer);
+  registerAnswers(answer, card);
+      if(userAnswers.length === 2 && clickedCards.length === 2) {
+        allowClick = false;
+        handleAnswers();
+      }
+}
+
+//Restart the game
+//Redémarrage du jeu
+function restartGame(winner = true) {
+  if(winner) {
+    alert("you win");
+  }
+  else {
+    alert("you lose");
+  }
+  location.reload();
+}
+
+//code logic
+
+//Initialize the game
+//démarrage du jeu
+function startGame() {
+  addCards();
+  timer();
+
+  let colors = randomizeColors();
+  let cards = document.getElementsByClassName("card");
+
+  for (let i = 0; i < cards.length; i++) {
+    cards[i].addEventListener("click", function(){
+      if(allowClick && this.style.backgroundColor === 'black') {
+        playMoove(this, colors[i]);
+      }
+    });
+  }
+}
+
+
+startGameButton.addEventListener("click", function() {
+  this.style.display = "none";
+  startGame();
+});
