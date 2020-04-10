@@ -61,7 +61,7 @@ function changeCardColor(card, color) {
 //Function to start the time
 // Fonction pour démarrer le temps
 function timer() {
-  let seconds = 30;
+  let seconds = 45;
   let timer = document.getElementById("timer");
   timer.innerHTML = "<i class='fas fa-hourglass-start ml-2'></i> Temps restant : " + seconds + " s";
   setInterval(function(){
